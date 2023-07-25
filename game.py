@@ -29,6 +29,8 @@ class Game:
         
         self.is_running = True
         self.show_menu = True
+        self.handle_menu_buttons = True
+        self.dissolve_buttons = False
 
         self.difficulty = None
         self.buttons = self.init_menu_buttons()
@@ -45,29 +47,40 @@ class Game:
             if event.type == pygame.QUIT:
                 self.is_running = False
 
+            if self.handle_menu_buttons:
+                for button in self.buttons:
+                    self.difficulty = selected = button.handle_event(event)
+                    
+                    if selected:
+                        self.handle_menu_buttons = False
+                        self.dissolve_buttons = True
+                        self.start_time = pygame.time.get_ticks()
+                        break
             
-            for button in self.buttons:
-                self.difficulty = button.handle_event(event)
-                if self.difficulty:
-                    self.show_menu = False
-                    self.buttons = []
-                    break
             
             
-                
-
     def update(self):
         # Update game logic here
         pass
 
     def draw(self):
         self.screen.fill(colours.GREY)
-        print(self.difficulty)
 
         if self.show_menu: 
             self.blit_title()
-            for button in self.buttons:
+
+            for button in self.buttons:  
+                if self.dissolve_buttons:
+   
+                    dissolved = button.dissolve(self.start_time)  
+                    if dissolved:
+                        self.buttons = []
+                        self.show_menu = False
+                        break
+                
                 button.draw()
+
+
 
         # Draw game objects here
         pygame.display.flip()
@@ -75,17 +88,17 @@ class Game:
 
     def init_menu_buttons(self):
         buttons = []
-        for i, difficulty in enumerate(("Easy", "Intermediate", "Hard"), start=1):
+        for i, difficulty in enumerate(("Easy", "Medium", "Hard"), start=1):
             button = MenuButton(
                             self.screen, 
                             x = SCREEN_WIDTH // 2,
                             y = 120 + (i * 100), 
-                            width = 200,
+                            width = 250,
                             height = 60,
                             text = difficulty,
                             font_size = 30,
                             text_colour = colours.BLACK,
-                            rect_colour=colours.DIM_GREY
+                            rect_colour = colours.DIM_GREY
                             )
             button.center_x()
             buttons.append(button)
@@ -93,20 +106,40 @@ class Game:
 
 
     def blit_title(self):
-        # Set up font and text
-        font = pygame.font.Font(None, 70)  # You can change the font and size here
+           
+        def draw_face_for_i():   
+            happy_face = pygame.image.load("assets/images/happy_face.png")
+            happy_face = pygame.transform.scale(happy_face, (25, 25))
 
-        # Render the text
-        text_surface = font.render("Minesweeper", True, colours.BLACK)  # Render text with black color (0, 0, 0)
+            # Get the image dimensions
+            width = happy_face.get_width()
+            height = happy_face.get_height()
 
-        # Get the dimensions of the text surface
-        text_width, text_height = text_surface.get_size()
+            # Calculate the position to center the image within the rectangle
+            x = ((SCREEN_WIDTH - width) // 2 ) * 0.65
+            y = ((SCREEN_HEIGHT - height) // 2 ) - 220
 
-        # Calculate the position to center the text on the screen
-        center_x = (SCREEN_WIDTH - text_width) // 2
-        center_y = (SCREEN_WIDTH - text_height) // 2 - 270
-        
-        self.screen.blit(text_surface, (center_x, center_y))
+            self.screen.blit(happy_face, (x, y))
+
+
+        def draw_title_text():
+            # Set up font and text
+            font = pygame.font.Font("assets/fonts/menu__title.ttf", 100)  # You can change the font and size here
+
+
+            text_surface = font.render("Minesweeper", True, colours.BLACK)  # Render text with black color (0, 0, 0)
+
+            # Get the dimensions of the text surface
+            text_width, text_height = text_surface.get_size()
+
+            # Calculate the position to center the text on the screen
+            center_x = (SCREEN_WIDTH - text_width) // 2
+            center_y = (SCREEN_WIDTH - text_height) // 2 - 270
+            
+            self.screen.blit(text_surface, (center_x, center_y))
+
+        draw_face_for_i()
+        draw_title_text()
 
 
 

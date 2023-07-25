@@ -5,6 +5,8 @@ import game
 
 class Button:
 
+   
+
     def __init__(self, screen, x, y, width, height, text, font):
         self.screen = screen
 
@@ -14,7 +16,8 @@ class Button:
         self.width = width
         self.height = height
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        
+        self.surface = pygame.Surface((width, height), pygame.SRCALPHA)
+
         #Default appearance
         self.text = text
         self.font = font
@@ -23,14 +26,16 @@ class Button:
 
         self.hover = False
         #self.function = function
-        
+        self.select_sound = pygame.mixer.Sound("assets/sounds/menu_button.wav")
 
    
     def draw(self) -> None:
         """
         Draws the button rectangle on screen
         """
-        pygame.draw.rect(self.screen, self.rect_colour, self.rect, border_radius = 20)
+        pygame.draw.rect(self.surface, self.rect_colour, self.rect, border_radius = 20)
+        self.screen.blit(self.surface, (self.rect.x, self.rect.y))
+
         text = self.font.render(self.text, True, self.text_colour)
         text_rect = text.get_rect(center = self.rect.center)
         self.screen.blit(text, text_rect)
@@ -44,8 +49,8 @@ class Button:
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if self.rect.collidepoint(event.pos):
+                self.select_sound.play()
                 return self.text
-                #self.function()
            
                 
     def center(self) -> None:
@@ -60,3 +65,18 @@ class Button:
     
     def center_y(self) -> None:
         self.rect.y = (game.SCREEN_HEIGHT - self.height) // 2
+
+    def dissolve(self, start_time):
+        # Calculate the time elapsed since the start of the loop
+        elapsed_time = pygame.time.get_ticks() - start_time
+
+        # Calculate the current alpha value based on elapsed time
+        current_alpha = max(0, 255 - (255 * elapsed_time / 1000))
+
+        # Set the new alpha value for the rectangle
+        self.surface.set_alpha(int(current_alpha))
+
+        if current_alpha == 0: 
+            return True
+
+        
