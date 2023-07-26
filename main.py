@@ -1,4 +1,5 @@
-from game import Game
+from minesweeper import Minesweeper
 if __name__ == "__main__":
-    game = Game()
+    game = Minesweeper()
     game.run()
+    

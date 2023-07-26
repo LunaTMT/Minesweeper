@@ -25,7 +25,8 @@ class Button:
         self.text_colour = colours.WHITE
 
         self.hover = False
-        #self.function = function
+        self.clicked = False
+        
         self.select_sound = pygame.mixer.Sound("assets/sounds/menu_button.wav")
 
    
@@ -49,6 +50,7 @@ class Button:
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if self.rect.collidepoint(event.pos):
+                self.clicked = True
                 self.select_sound.play()
                 return self.text
            
@@ -71,7 +73,7 @@ class Button:
         elapsed_time = pygame.time.get_ticks() - start_time
 
         # Calculate the current alpha value based on elapsed time
-        current_alpha = max(0, 255 - (255 * elapsed_time / 1000))
+        current_alpha = max(0, 255 - (255 * elapsed_time / 2000))
 
         # Set the new alpha value for the rectangle
         self.surface.set_alpha(int(current_alpha))

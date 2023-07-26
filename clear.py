@@ -1,5 +1,14 @@
 from collections import OrderedDict 
 
+board = [[0,0,0,1,1,0,0],
+         [0,0,1,1,1,0,0],
+         [1,1,1,1,0,0,1],
+         [0,1,0,0,0,1,1],
+         [0,0,1,1,1,1,1],
+         [0,1,1,1,0,0,0],
+         [1,1,1,1,0,0,0]]
+
+
 """This piece of code finds the positions for a 0 valued-group and its non 0 neighbours, aka a sweep or clear"""
 
 def sweep(initial_position, board):          
