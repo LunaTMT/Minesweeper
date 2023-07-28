@@ -5,6 +5,11 @@ import game
 
 class Tile:
 
+    """
+    It was necessary to instantiate all the following assets as class variables 
+    otherwise each tile would have to initialise the following. W
+    When set as class variables the initialisation of the board is much more efficient and without delay    
+    """
     pygame.mixer.init()
     CLICKED_TILE = pygame.image.load("assets/images/tiles/clicked_tile.png")
     DEFAULT_TILE = pygame.image.load("assets/images/tiles/default_tile.png")
@@ -13,7 +18,13 @@ class Tile:
     CORRECTLY_MARKED_BOMB = pygame.image.load("assets/images/tiles/correctly_marked_bomb.png")
     CLICKED_BOMB = pygame.image.load("assets/images/tiles/clicked_bomb.png")
     
-    IMAGES_INIT = False
+    """
+    When initialising the first tile image we want to set the sizes of the tiles to the cell size.
+    There is no point resizing for every instantiation of Tile. 
+    It is impossible to resize here for the cell size is dynamic and can only be passed from board.
+    Thus, the size transformation must occur in first tile __init__.
+    """
+    IMAGES_INIT = False 
 
     CLICK_SOUND = pygame.mixer.Sound("assets/sounds/tile_click_2.wav")
     PLACE_FLAG_SOUND = pygame.mixer.Sound("assets/sounds/plant_flag_2.wav")
@@ -40,19 +51,18 @@ class Tile:
         self.y = y
         self.width, self.height = self.cell_size = cell_size
 
-        
-        if not Tile.IMAGES_INIT:
+        self.bombs_nearby = 0
+        self.is_bomb = False
+        self.visible = False
+        self.hover = False
+                
+        if not Tile.IMAGES_INIT: #Image init
             Tile.CLICKED_TILE = pygame.transform.scale(Tile.CLICKED_TILE, (self.width, self.height))
             Tile.DEFAULT_TILE = pygame.transform.scale(Tile.DEFAULT_TILE, (self.width, self.height))
             Tile.FLAGGED_TILE = pygame.transform.scale(Tile.FLAGGED_TILE, (self.width, self.height))
             Tile.BOMB = pygame.transform.scale(Tile.BOMB, (self.width, self.height))
             Tile.CORRECTLY_MARKED_BOMB = pygame.transform.scale(Tile.CORRECTLY_MARKED_BOMB, (self.width, self.height))
             Tile.CLICKED_BOMB = pygame.transform.scale(Tile.CLICKED_BOMB, (self.width, self.height))
-
-        self.bombs_nearby = 0
-        self.is_bomb = False
-        self.visible = False
-        self.hover = False
 
         self.value = Tile.DEFAULT_TILE
         self.image = pygame.Surface([self.width, self.height])
@@ -62,7 +72,10 @@ class Tile:
 
 
     def draw(self):
-
+        """
+        This function simply draws the tile to the screen with its associated image value
+        If the tile is visible we will blit the number of bombs within its proximity on top of the tile.
+        """
         self.screen.blit(self.value, (self.x, self.y))
         
         if self.visible:
@@ -71,14 +84,21 @@ class Tile:
 
 
     def handle_event(self, event):
-        
-        if event.type == pygame.MOUSEBUTTONDOWN and not game.is_finished:
+        """
+        This funciton handles the events for a tile.
+        Given this function is quite large and dense I will write cdescriptions above each main conditional
+        """
+
+        #So long as the game has not finished we can interact with a tile
+        if event.type == pygame.MOUSEBUTTONDOWN and not game.is_finished: 
         
             if self.rect.collidepoint(event.pos):
-                if event.button == 1 and self.value != Tile.FLAGGED_TILE and not self.visible:  # Check if it's a left-click
-                    self.visible = True
-                    self.reset_button.image = self.reset_button.shocked_smiley_image 
 
+                #If the user clicks the tile, it is not yet visible or been flagged
+                if event.button == 1 and self.value != Tile.FLAGGED_TILE and not self.visible: 
+                    self.visible = True
+
+                    #If the tile is a bomb the game is over and we want to show all bombs and end the current game
                     if self.is_bomb:
                         self.board.show_bombs()
                         self.value = Tile.CLICKED_BOMB
@@ -86,20 +106,26 @@ class Tile:
                         game.lost = True
                         game.is_finished = True
 
+                    #If the current tile has no bombs nearby we want to perform a sweep/clear
                     elif self.bombs_nearby == 0:
                         self.board.sweep((self.row, self.column))
                         Tile.SWEEP_SOUND.play()
 
+                    #Otherwise the tile is perfectly fine to be revealed and its associated value can be represent by a clicked_tile
                     else:
                         self.value = Tile.CLICKED_TILE
                         Tile.CLICK_SOUND.play()
 
-                elif event.button == 3 and not self.visible:  # Check if it's a right-click
+                #If the user right clicks and the tile is not yet visible
+                elif event.button == 3 and not self.visible: 
+                    
+                    #If the tile is already flagged we want to remove the flag and set the tile to its default value
                     if self.value == Tile.FLAGGED_TILE:
                         self.value = Tile.DEFAULT_TILE
                         self.board.bombs += 1
                         Tile.REMOVE_FLAG_SOUND.play()
 
+                    #If the tile is not flagged and we still have flags left to place then place a flag down on this tile.
                     elif self.board.bombs > 0:
                         self.value = Tile.FLAGGED_TILE
                         self.board.bombs -= 1
@@ -108,6 +134,9 @@ class Tile:
         
 
     def _draw_bomb_number(self):
+        """
+        This function blits ontop of the tile the number of bombs in its proximity
+        """
         font = pygame.font.Font("assets/fonts/digital.ttf", int(self.width))
         if self.bombs_nearby == 0:
             text_surface = font.render("", True, (0, 0, 0))
