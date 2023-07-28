@@ -2,24 +2,18 @@ import pygame
 from .button import Button
 import assets.colours as colours
 import game
+import time
+
 class MenuButton(Button):
     
-    def __init__(self, 
-                 screen, 
-                 x, y, 
-                 width, 
-                 height, 
-                 text, 
-                 font_size,
-                 text_colour=colours.WHITE, 
-                 rect_colour=colours.WHITE):
-        
-        super().__init__(screen, x, y, width, height, text, font_size)
+    def __init__(self, screen, x=0, y=0, width=0, height=0, text=None, font=None):
+        super().__init__(screen, x, y, width, height, text, font)
+
+
         self.font = pygame.font.Font("assets/fonts/menu_buttons.ttf", 30)
-        self.default_text_colour = self.text_colour = text_colour
-        self.default_rect_colour = self.rect_colour = rect_colour
+        self.default_text_colour = self.text_colour = colours.BLACK,
+        self.default_rect_colour = self.rect_colour = colours.DIM_GREY
         
-    
         self.cool_face_image = pygame.image.load("assets/images/faces/cool_face.png")
         self.cool_face_image = pygame.transform.scale(self.cool_face_image, (25, 25))
 
@@ -65,9 +59,7 @@ class MenuButton(Button):
             self._draw_flag()
             self._draw_face_for_i()
     
-        self.screen.blit(self.surface, (self.rect.x , self.rect.y))
-        
-        
+        self.screen.blit(self.surface, (self.rect.x , self.rect.y))      
 
     def _draw_base_rectangle(self):
         rounded_rect_rect = pygame.Rect(0, 0, self.width, self.height)
@@ -97,3 +89,19 @@ class MenuButton(Button):
         y = ((game.SCREEN_HEIGHT - height) // 2 ) - 220
 
         self.screen.blit(self.face_image, (x, y))
+
+
+    def dissolve(self, start_time):
+        # Calculate the time elapsed since the start of the loop
+        elapsed_time = pygame.time.get_ticks() - start_time
+
+        # Calculate the current alpha value based on elapsed time
+        current_alpha = max(0, 255 - (255 * elapsed_time / 2000))
+
+        # Set the new alpha value for the rectangle
+        self.surface.set_alpha(int(current_alpha))
+
+        if current_alpha == 0: 
+            game.start_time = time.time()
+            return True
+        

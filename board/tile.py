@@ -32,6 +32,7 @@ class Tile:
 
     def __init__(self, board, screen, row, column,  x, y, cell_size):
         self.board = board
+        self.reset_button = board.reset_button
         self.screen = screen
         self.row = row
         self.column = column
@@ -61,8 +62,7 @@ class Tile:
 
 
     def draw(self):
-        #if self.is_bomb:
-        #    self.value = Tile.BOMB
+
         self.screen.blit(self.value, (self.x, self.y))
         
         if self.visible:
@@ -75,12 +75,15 @@ class Tile:
         if event.type == pygame.MOUSEBUTTONDOWN and not game.is_finished:
     
             if self.rect.collidepoint(event.pos):
-                if event.button == 1 and self.value != Tile.FLAGGED_TILE:  # Check if it's a left-click
+                if event.button == 1 and self.value != Tile.FLAGGED_TILE and not self.visible:  # Check if it's a left-click
                     self.visible = True
+                    self.reset_button.image = self.reset_button.shocked_smiley_image 
 
                     if self.is_bomb:
+                        self.board.show_bombs()
                         self.value = Tile.CLICKED_BOMB
                         Tile.BOMB_SOUND.play()
+                        game.lost = True
                         game.is_finished = True
 
                     elif self.bombs_nearby == 0:
@@ -94,9 +97,13 @@ class Tile:
                 elif event.button == 3 and not self.visible:  # Check if it's a right-click
                     if self.value == Tile.FLAGGED_TILE:
                         self.value = Tile.DEFAULT_TILE
+                        self.board.mines += 1
                         Tile.REMOVE_FLAG_SOUND.play()
-                    else:
+
+                    elif self.board.mines > 0:
                         self.value = Tile.FLAGGED_TILE
+                        self.board.mines -= 1
+                        self.board.check_win()
                         Tile.PLACE_FLAG_SOUND.play()
    
 

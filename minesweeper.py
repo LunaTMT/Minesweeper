@@ -31,6 +31,7 @@ class Minesweeper:
         self.dissolve_buttons = False
 
         self.play_game = False
+        self.bombs_shown = False
 
         self.difficulty = None
         self.buttons = self.init_menu_buttons()
@@ -110,10 +111,14 @@ class Minesweeper:
 
         if self.play_game:
             self.board.draw()
-            
-            if game.is_finished:
-                self.board.show_bombs()
 
+            
+                
+    
+
+
+        
+            
 
 
         # Draw game objects here
@@ -125,15 +130,10 @@ class Minesweeper:
         for i, difficulty in enumerate(("Easy", "Medium", "Hard"), start=1):
             button = MenuButton(
                             self.screen, 
-                            x = game.SCREEN_WIDTH // 2,
                             y = 120 + (i * 100), 
                             width = 250,
                             height = 60,
-                            text = difficulty,
-                            font_size = 30,
-                            text_colour = colours.BLACK,
-                            rect_colour = colours.DIM_GREY
-                            )
+                            text = difficulty)
             button.center_x()
             buttons.append(button)
         return buttons
@@ -157,7 +157,6 @@ class Minesweeper:
         def draw_title_text():
             # Set up font and text
             font = pygame.font.Font("assets/fonts/menu_title.ttf", 100)  # You can change the font and size here
-
 
             text_surface = font.render("Minesweeper", True, colours.BLACK)  # Render text with black color (0, 0, 0)
 
