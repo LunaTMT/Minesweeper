@@ -68,11 +68,11 @@ class Minesweeper:
                 
                         match self.difficulty:
                             case "Easy":
-                                self.board = Board(self, rows=10, columns=10, mines=10)
+                                self.board = Board(self, rows=10, columns=10, bombs=10)
                             case "Medium":
-                                self.board = Board(self, rows=16, columns=16, mines=40)
+                                self.board = Board(self, rows=16, columns=16, bombs=40)
                             case "Hard":
-                                self.board = Board(self, rows=16, columns=30, mines=99)
+                                self.board = Board(self, rows=16, columns=30, bombs=99)
                         """
                         Gamestate change
                         we no longer want to show the menu or allow anymore handling of the buttons

@@ -71,9 +71,9 @@ class Tile:
 
 
     def handle_event(self, event):
-
+        
         if event.type == pygame.MOUSEBUTTONDOWN and not game.is_finished:
-    
+        
             if self.rect.collidepoint(event.pos):
                 if event.button == 1 and self.value != Tile.FLAGGED_TILE and not self.visible:  # Check if it's a left-click
                     self.visible = True
@@ -97,15 +97,15 @@ class Tile:
                 elif event.button == 3 and not self.visible:  # Check if it's a right-click
                     if self.value == Tile.FLAGGED_TILE:
                         self.value = Tile.DEFAULT_TILE
-                        self.board.mines += 1
+                        self.board.bombs += 1
                         Tile.REMOVE_FLAG_SOUND.play()
 
-                    elif self.board.mines > 0:
+                    elif self.board.bombs > 0:
                         self.value = Tile.FLAGGED_TILE
-                        self.board.mines -= 1
+                        self.board.bombs -= 1
                         self.board.check_win()
                         Tile.PLACE_FLAG_SOUND.play()
-   
+        
 
     def _draw_bomb_number(self):
         font = pygame.font.Font("assets/fonts/digital.ttf", int(self.width))

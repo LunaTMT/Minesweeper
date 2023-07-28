@@ -37,8 +37,9 @@ class ResetButton(Button):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.rect.collidepoint(event.pos):
                 
-                self.board.reset_mines()
+                self.board.bombs = self.board.default_bombs
                 self.board.generate()
+                self.board.set_bomb_number_for_each_tile()
                 game.start_time = time.time()
                 game.won = game.lost = game.is_finished = False
                 
