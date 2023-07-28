@@ -26,7 +26,7 @@ class Tile:
     """
     IMAGES_INIT = False 
 
-    CLICK_SOUND = pygame.mixer.Sound("assets/sounds/tile_click_2.wav")
+    CLICK_SOUND = pygame.mixer.Sound("assets/sounds/tile_click.wav")
     PLACE_FLAG_SOUND = pygame.mixer.Sound("assets/sounds/plant_flag_2.wav")
     REMOVE_FLAG_SOUND = pygame.mixer.Sound("assets/sounds/remove_flag.wav")
     BOMB_SOUND = pygame.mixer.Sound("assets/sounds/bomb.wav")

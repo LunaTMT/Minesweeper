@@ -96,7 +96,7 @@ class MenuButton(Button):
         elapsed_time = pygame.time.get_ticks() - start_time
 
         # Calculate the current alpha value based on elapsed time
-        current_alpha = max(0, 255 - (255 * elapsed_time / 2000))
+        current_alpha = max(0, 255 - (255 * elapsed_time / 1000))
 
         # Set the new alpha value for the rectangle
         self.surface.set_alpha(int(current_alpha))

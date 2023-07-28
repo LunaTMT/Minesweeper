@@ -3,11 +3,10 @@ import assets.colours as colours
 
 import game
 
+#This class centers as the parent class for menu_button and reset_button
 class Button:
 
-   
-
-    def __init__(self, screen, x=0, y=0, width=0, height=0, text=None, font=None):
+    def __init__(self, screen, x=0, y=0, width=50, height=50, text=None, font=None):
         self.screen = screen
 
         #default rectangle

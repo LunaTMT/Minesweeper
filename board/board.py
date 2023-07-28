@@ -74,7 +74,6 @@ class Board():
 
         row, column = position
         if  not (0 <= row < self.rows) or not (0 <= column < self.columns):
-            print(row, column)
             raise IndexError("Index out of range")
 
         self.board[row][column] = value
@@ -141,7 +140,6 @@ class Board():
             for tile in row:
                 if not tile.is_bomb:
                     count = 0
-                    print(tile.row, tile.column)
                     for position in self.get_neighbours((tile.row, tile.column)):
                         if self[position].is_bomb: count += 1
                     tile.bombs_nearby = count
@@ -177,11 +175,17 @@ class Board():
         self.screen.blit(bomb_count_text, (text_x, text_y))
 
     def _draw_timer(self):
-        """T
-        his function draws the current time elapsed since the initialisation of the game"""
+        """
+        his function draws the current time elapsed since the initialisation of the game
+        When the game is finished the timer stops
+        The timer never exceds 999
+        """
+        elapsed_time = time.time() - game.start_time
         if not game.is_finished:
-            elapsed_time = time.time() - game.start_time
             self.timer_value = int(elapsed_time)
+        
+        if elapsed_time > 999:
+            self.timer_value = 999
 
         pygame.draw.rect(self.screen, colours.BLACK, self.timer_rect, border_radius=10) 
         font = pygame.font.Font("assets/fonts/digital.ttf", 50)

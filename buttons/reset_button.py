@@ -21,7 +21,7 @@ class ResetButton(Button):
         self.smiley_image = pygame.transform.scale(self.smiley_image, (50, 50))
         self.cool_smiley_image = pygame.transform.scale(self.cool_smiley_image, (50, 50))
 
-        self.select_sound = pygame.mixer.Sound("assets/sounds/tile_click_2.wav")
+        self.select_sound = pygame.mixer.Sound("assets/sounds/tile_click.wav")
         self.image = self.smiley_image
 
     def draw(self) -> None:
@@ -43,7 +43,6 @@ class ResetButton(Button):
                 game.start_time = time.time()
                 game.won = game.lost = game.is_finished = False
                 
-
                 self.image = self.clicked_smiley_button
                 self.select_sound.play()
                 return self.text

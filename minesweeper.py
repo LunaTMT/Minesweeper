@@ -2,24 +2,15 @@ import pygame
 import sys
 
 from buttons.menu_button import MenuButton
+from buttons.return_button import ReturnButton
 from board.board import Board
 import assets.colours as colours
 import game
 
-# Initialize Pygame
-pygame.init()
 
-
-
-"""
-beginner: 10 mines, 10x10
-intermediate:  40 mines, 16x16
-expert: 99 mines,  16 x 30
-"""
-
-    
 class Minesweeper:
     def __init__(self):
+        pygame.init()
         self.screen = pygame.display.set_mode((game.SCREEN_WIDTH, game.SCREEN_HEIGHT))
         pygame.display.set_caption("Minesweeper")
         self.clock = pygame.time.Clock()
@@ -34,7 +25,9 @@ class Minesweeper:
         self.bombs_shown = False
 
         self.difficulty = None
-        self.buttons = self.init_menu_buttons()
+        
+        self.buttons = []
+        self.init_menu_buttons()
 
     def run(self):
         while self.is_running:
@@ -55,7 +48,7 @@ class Minesweeper:
                     This difficult is used to correctly instantiate the correct board parameters below
                     """
                     self.difficulty = pressed = button.handle_event(event)
-                    
+    
 
                     if pressed: 
                         """
@@ -73,6 +66,8 @@ class Minesweeper:
                                 self.board = Board(self, rows=16, columns=16, bombs=40)
                             case "Hard":
                                 self.board = Board(self, rows=16, columns=30, bombs=99)
+                        self.return_button = ReturnButton(self, x=10, y=10)
+
                         """
                         Gamestate change
                         we no longer want to show the menu or allow anymore handling of the buttons
@@ -85,6 +80,7 @@ class Minesweeper:
             
             if self.play_game:
                 self.board.handle_event(event)
+                self.return_button.handle_event(event)
             
     def update(self):
         # Update game logic here
@@ -99,33 +95,28 @@ class Minesweeper:
             for button in self.buttons:  
                 if self.dissolve_buttons:
                     has_dissolved = button.dissolve(self.start_time)  #have the buttons fully disolved? (Bool)
-                    
                     #Gamestate change
                     if has_dissolved:
                         # When the buttons have fully disolved we no longer want to show the buttons and we want the game to begin
                         self.buttons = []
                         self.show_menu = False
                         self.play_game = True
+                        self.dissolve_buttons = False
                         break
                 button.draw()
 
         if self.play_game:
             self.board.draw()
+            self.return_button.draw()
 
-            
-                
-    
-
-
-        
-            
-
-
-        # Draw game objects here
         pygame.display.flip()
 
 
     def init_menu_buttons(self):
+        """
+        This function initialised 3 MenuButton objects each centered along the x axis and beneath the other
+        They denote the difficulty of the game to be played
+        """
         buttons = []
         for i, difficulty in enumerate(("Easy", "Medium", "Hard"), start=1):
             button = MenuButton(
@@ -136,11 +127,14 @@ class Minesweeper:
                             text = difficulty)
             button.center_x()
             buttons.append(button)
-        return buttons
+        self.buttons = buttons
 
     def blit_title(self):
-
-        def draw_face_for_i():   
+        
+        def draw_face_for_i():  
+            """
+            This function blits a smiley face above the 'i' in the title
+            """
             happy_face = pygame.image.load("assets/images/faces/happy_face.png")
             happy_face = pygame.transform.scale(happy_face, (25, 25))
 
@@ -155,6 +149,9 @@ class Minesweeper:
             self.screen.blit(happy_face, (x, y))
         
         def draw_title_text():
+            """
+            This funciton simply blits the title text 
+            """
             # Set up font and text
             font = pygame.font.Font("assets/fonts/menu_title.ttf", 100)  # You can change the font and size here
 
