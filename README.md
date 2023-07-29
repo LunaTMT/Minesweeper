@@ -4,7 +4,6 @@
 
 https://github.com/LunaTMT/Minesweeper/assets/44672093/bb04ef9b-67f2-4280-b39a-b8e6fb357d70
 
-
 ## Installation & Setup
 
 * To run this program please make sure you have [python](https://www.python.org/downloads/) installed on your system.
@@ -31,7 +30,7 @@ https://github.com/LunaTMT/Minesweeper/assets/44672093/bb04ef9b-67f2-4280-b39a-b
 
 </div>
 
-* Once the contents of the zip folder are in the new folder, right click _main.py_ and you should see an option noted _'Open with IDLE.'_&#x20;
+* Once the contents of the zip folder are in the new folder, right click _main.py_ and you should see an option noted _'Open with IDLE.'_
 
 <div align="center">
 
@@ -58,4 +57,20 @@ If you do not see this you most likely do not have python installed properly on 
 <figure><img src=".gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
 
 </div>
+
+### Personal Overview
+
+The base game for this project took 2 days to make and I'm quite surprised how quickly I was able to accomplish this project. The hardest part of the game was the sweeping algorithm, however, I managed to get this all sorted in an evening. I think the past 3 months of leetcode questions has really helped me get to grips with algorithmic problems and how to go about solving them.
+
+I'd like to give a personal thanks to [fullptr](https://www.reddit.com/user/fullptr/) who gave me some really solid advise about my over usage of classes in my [previous reddit post](https://www.reddit.com/r/Python/comments/157beuo/my\_third\_project/), as well other advise that really made this project much simpler to make.
+
+The next two days was followed up by refactoring, comments and making the game more presentable.
+
+### Future Projects
+
+* 2048
+* Doodle Jump
+* Tetris
+
+
 
