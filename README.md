@@ -1,2 +1,3 @@
-# Page
+# Minesweeper
 
+## Demonstration
