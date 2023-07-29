@@ -2,5 +2,6 @@
 
 ## Demonstration
 
-https://github.com/LunaTMT/Minesweeper/assets/44672093/c2d2a531-0728-492f-b242-b25d3fb10ca8
+https://github.com/LunaTMT/Minesweeper/assets/44672093/7c2391c4-2e05-4481-9f4d-5de652c45fee
+
 
