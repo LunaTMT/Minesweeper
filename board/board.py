@@ -1,12 +1,14 @@
-from collections import OrderedDict 
-from .tile import Tile
-from buttons.reset_button import ResetButton
 import pygame
-import assets.colours as colours
-
 import random
 import game
 import time
+
+import assets.colours as colours
+
+from collections import OrderedDict 
+from .tile import Tile
+from buttons.reset_button import ResetButton
+
 
 class Board():
     

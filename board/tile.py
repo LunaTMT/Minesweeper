@@ -1,7 +1,8 @@
 import pygame
-from pygame.locals import *
 import assets.colours as colours
 import game
+
+from pygame.locals import *
 
 class Tile:
 
@@ -40,6 +41,8 @@ class Tile:
                     6: colours.GREY,
                     7: colours.MAROON,
                     8: colours.TURQOUISE}
+    
+    clicking = False
 
     def __init__(self, board, screen, row, column,  x, y, cell_size):
         self.board = board
@@ -90,13 +93,15 @@ class Tile:
         """
 
         #So long as the game has not finished we can interact with a tile
-        if event.type == pygame.MOUSEBUTTONDOWN and not game.is_finished: 
-        
+        if event.type == MOUSEBUTTONDOWN and not game.is_finished: 
+            
             if self.rect.collidepoint(event.pos):
 
                 #If the user clicks the tile, it is not yet visible or been flagged
                 if event.button == 1 and self.value != Tile.FLAGGED_TILE and not self.visible: 
                     self.visible = True
+                    Tile.clicking = True
+                    self.reset_button.value = self.reset_button.shocked_smiley_image
 
                     #If the tile is a bomb the game is over and we want to show all bombs and end the current game
                     if self.is_bomb:
@@ -132,6 +137,8 @@ class Tile:
                         self.board.check_win()
                         Tile.PLACE_FLAG_SOUND.play()
         
+        elif event.type == MOUSEBUTTONUP:
+            Tile.clicking = False
 
     def _draw_bomb_number(self):
         """

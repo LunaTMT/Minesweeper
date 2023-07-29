@@ -1,15 +1,14 @@
 import pygame
-from .button import Button
-import assets.colours as colours
 import game
 import time
+import assets.colours as colours
+
+from .button import Button
 
 class MenuButton(Button):
     
     def __init__(self, screen, x=0, y=0, width=0, height=0, text=None, font=None):
         super().__init__(screen, x, y, width, height, text, font)
-
-
         self.font = pygame.font.Font("assets/fonts/menu_buttons.ttf", 30)
         self.default_text_colour = self.text_colour = colours.BLACK,
         self.default_rect_colour = self.rect_colour = colours.DIM_GREY
@@ -28,24 +27,27 @@ class MenuButton(Button):
 
         self.face_image = self.happy_face_image
         
-
-    def __str__(self):
-        return str(self.hover)
-
-
     def draw(self):
-        
+        """
+        This function draws the base menubutton
+        """
         if self.hover:
+            
             self.rect_colour = colours.GREY_60
             self.text_colour = colours.WHITE
 
-            if self.text == "Easy":
-                self.face_image = self.cool_face_image 
-            if self.text == "Medium":
-                self.face_image = self.scared_face_image
-            elif self.text == "Hard": 
-                self.face_image = self.dead_face_image
-        else:
+            #When hovering on a button the face above the title changes based upon the difficulty
+            match self.text:
+                case"Easy":
+                    self.face_image = self.cool_face_image 
+                case "Medium":
+                    self.face_image = self.scared_face_image
+                case "Hard": 
+                    self.face_image = self.dead_face_image
+
+            self._draw_face_for_i()
+            
+        else: #If we are not hovering on the button we want it to remain in its default state
             self.rect_colour = self.default_rect_colour
             self.text_colour = self.default_text_colour
             
@@ -55,12 +57,13 @@ class MenuButton(Button):
         self._draw_base_rectangle()
         self._draw_text()
 
+        #We must blit the flag ontop of the base rectangle otherwise it cannot be seen
         if self.hover:
             self._draw_flag()
-            self._draw_face_for_i()
-    
+
         self.screen.blit(self.surface, (self.rect.x , self.rect.y))      
 
+    """The following 4 functions are self explanatory"""
     def _draw_base_rectangle(self):
         rounded_rect_rect = pygame.Rect(0, 0, self.width, self.height)
         pygame.draw.rect(self.surface, self.rect_colour, rounded_rect_rect, border_radius=20)
@@ -92,6 +95,9 @@ class MenuButton(Button):
 
 
     def dissolve(self, start_time):
+        """
+        This function changes the transparency of the buttons over 1s to give the appearance of dissolving
+        """
         # Calculate the time elapsed since the start of the loop
         elapsed_time = pygame.time.get_ticks() - start_time
 

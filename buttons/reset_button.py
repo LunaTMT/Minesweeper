@@ -1,8 +1,9 @@
-from .button import Button
 import pygame
 import game
 import time
 
+from board.tile import Tile
+from .button import Button
 class ResetButton(Button):
 
     def __init__(self, board, screen, x=0, y=0, width=0, height=0, text=None, font=None):
@@ -25,15 +26,26 @@ class ResetButton(Button):
         self.image = self.smiley_image
 
     def draw(self) -> None:
-
+        """
+        This function draws the reset button object depending upon its state
+        If the user lost we want to show a dead face
+        If they won, a cool smiley
+        """
         if game.lost:
             self.image = self.dead_smiley_image
         elif game.won:
             self.image = self.cool_smiley_image
+        
+        if Tile.clicking:
+            self.image = self.shocked_smiley_image
 
         self.screen.blit(self.image, self.rect)
     
     def handle_event(self, event) -> None:
+        """
+        This function handles the events that pertain to the reset button.
+        If the user clicks on the button we reset all necessary states and the board for a new game to be played
+        """
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.rect.collidepoint(event.pos):
                 
@@ -45,7 +57,6 @@ class ResetButton(Button):
                 
                 self.image = self.clicked_smiley_button
                 self.select_sound.play()
-                return self.text
         else:    
-            self.image = self.smiley_image
+            self.image = self.smiley_image #Default image
         

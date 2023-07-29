@@ -1,4 +1,3 @@
-
 from pygame import Color as c
 
 WHITE = c('white')

@@ -1,11 +1,11 @@
 import pygame
-import sys
+import game
 
 from buttons.menu_button import MenuButton
 from buttons.return_button import ReturnButton
 from board.board import Board
 import assets.colours as colours
-import game
+
 
 
 class Minesweeper:
@@ -32,7 +32,6 @@ class Minesweeper:
     def run(self):
         while self.is_running:
             self.handle_events()
-            self.update()
             self.draw()
             self.clock.tick(game.FPS)
 
@@ -82,17 +81,21 @@ class Minesweeper:
                 self.board.handle_event(event)
                 self.return_button.handle_event(event)
             
-    def update(self):
-        # Update game logic here
-        pass
+
 
     def draw(self):
         self.screen.fill(colours.GREY)
         
+        #There are two main gamestates
+        # - showing the menu and,
+        # - playing the game
+
         if self.show_menu: 
             self.blit_title()
 
             for button in self.buttons:  
+                button.draw()
+
                 if self.dissolve_buttons:
                     has_dissolved = button.dissolve(self.start_time)  #have the buttons fully disolved? (Bool)
                     #Gamestate change
@@ -103,8 +106,7 @@ class Minesweeper:
                         self.play_game = True
                         self.dissolve_buttons = False
                         break
-                button.draw()
-
+                
         if self.play_game:
             self.board.draw()
             self.return_button.draw()
