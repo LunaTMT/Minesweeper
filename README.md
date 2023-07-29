@@ -2,7 +2,8 @@
 
 ## Demonstration
 
-{% embed url="https://github.com/LunaTMT/Minesweeper/assets/44672093/7c2391c4-2e05-4481-9f4d-5de652c45fee" %}
+https://github.com/LunaTMT/Minesweeper/assets/44672093/bb04ef9b-67f2-4280-b39a-b8e6fb357d70
+
 
 ## Installation & Setup
 
