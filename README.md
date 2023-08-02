@@ -4,6 +4,28 @@
 
 https://github.com/LunaTMT/Minesweeper/assets/44672093/bb04ef9b-67f2-4280-b39a-b8e6fb357d70
 
+### Menu
+https://github.com/LunaTMT/Minesweeper/assets/44672093/227fc63a-d8e5-422f-8473-d90fe67659de
+
+### Win
+https://github.com/LunaTMT/Minesweeper/assets/44672093/5905083b-80c2-4709-a2da-794383c69cf8
+
+### Lose
+https://github.com/LunaTMT/Minesweeper/assets/44672093/272869ea-8497-4ca4-ad93-b708e20a3656
+
+### Easy
+![image](https://github.com/LunaTMT/Minesweeper/assets/44672093/96931799-754a-4fca-918d-306402884170)
+
+### Medium
+![image](https://github.com/LunaTMT/Minesweeper/assets/44672093/8ac7529d-dcaf-4113-866c-36e64362d012)
+
+### Hard
+![image](https://github.com/LunaTMT/Minesweeper/assets/44672093/23a32afa-f2cc-454e-9dc2-840bc64a8d69)
+
+
+
+
+
 ## Installation & Setup
 
 * To run this program please make sure you have [python](https://www.python.org/downloads/) installed on your system.
