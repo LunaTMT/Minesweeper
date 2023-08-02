@@ -21,6 +21,8 @@ class Board():
         self.columns = columns
         self.default_bombs = self.bombs = bombs
 
+        self.win_sound = pygame.mixer.Sound("assets/sounds/win_sound.wav")
+
         #Initialising empty 2d list, size row X column
         self.board = [[None for _ in range(columns)] for _ in range(rows)]
 
@@ -302,6 +304,7 @@ class Board():
                 correct += 1
 
         if correct == self.default_bombs:
+            self.win_sound.play()
             self.show_bombs()
             game.won = True
             game.is_finished = True

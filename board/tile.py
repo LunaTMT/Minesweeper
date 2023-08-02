@@ -50,14 +50,17 @@ class Tile:
         self.screen = screen
         self.row = row
         self.column = column
+        self.position = (self.row, self.column)
         self.x = x
         self.y = y
         self.width, self.height = self.cell_size = cell_size
 
+        self.neighbours = []
         self.bombs_nearby = 0
         self.is_bomb = False
         self.visible = False
         self.hover = False
+        self.scroll_wheel_down = False
                 
         if not Tile.IMAGES_INIT: #Image init
             Tile.CLICKED_TILE = pygame.transform.scale(Tile.CLICKED_TILE, (self.width, self.height))
@@ -67,7 +70,7 @@ class Tile:
             Tile.CORRECTLY_MARKED_BOMB = pygame.transform.scale(Tile.CORRECTLY_MARKED_BOMB, (self.width, self.height))
             Tile.CLICKED_BOMB = pygame.transform.scale(Tile.CLICKED_BOMB, (self.width, self.height))
 
-        self.value = Tile.DEFAULT_TILE
+        self.previous_value = self.value = Tile.DEFAULT_TILE
         self.image = pygame.Surface([self.width, self.height])
         self.rect = self.image.get_rect()
         self.rect.x = x 
@@ -79,6 +82,7 @@ class Tile:
         This function simply draws the tile to the screen with its associated image value
         If the tile is visible we will blit the number of bombs within its proximity on top of the tile.
         """
+
         self.screen.blit(self.value, (self.x, self.y))
         
         if self.visible:
@@ -113,7 +117,7 @@ class Tile:
 
                     #If the current tile has no bombs nearby we want to perform a sweep/clear
                     elif self.bombs_nearby == 0:
-                        self.board.sweep((self.row, self.column))
+                        self.board.sweep(self.position)
                         Tile.SWEEP_SOUND.play()
 
                     #Otherwise the tile is perfectly fine to be revealed and its associated value can be represent by a clicked_tile
@@ -136,9 +140,75 @@ class Tile:
                         self.board.bombs -= 1
                         self.board.check_win()
                         Tile.PLACE_FLAG_SOUND.play()
-        
+                
+
+                elif event.button == 2:  # Scroll click
+                    self.scroll_wheel_down = True
+                    if not self.neighbours:
+                        self.neighbours = self.board.get_neighbours(self.position)
+                        self.neighbours.append(self.position)
+                        
+
+                    for position in self.neighbours:
+                        tile = self.board[position] 
+                        tile.previous_value = tile.value
+                        if tile.value != Tile.FLAGGED_TILE:
+                            tile.value = Tile.CLICKED_TILE   
+  
+
         elif event.type == MOUSEBUTTONUP:
             Tile.clicking = False
+            
+
+            if event.button == 2 and self.scroll_wheel_down: # Scroll release
+                bomb_count = sum(1 for position in self.neighbours if self.board[position].value == Tile.FLAGGED_TILE)
+
+                if self.visible and self.bombs_nearby != 0 and bomb_count == self.bombs_nearby:
+
+                    print("reveal")
+                    reveal_count = 0
+                    
+                    for position in self.neighbours:
+                        tile = self.board[position]
+                        
+                        if tile.is_bomb and tile.value != Tile.FLAGGED_TILE:
+                            tile.value = Tile.CLICKED_BOMB
+                            Tile.BOMB_SOUND.play()
+                            game.lost = True
+                            game.is_finished = True
+                        elif tile.value == Tile.FLAGGED_TILE:
+                            pass
+                        elif not tile.visible:
+                            reveal_count += 1
+                            tile.visible = True
+                           # self.value = Tile.CLICKED_TILE
+                    
+                    print(reveal_count)
+                    if reveal_count > 0:
+                        Tile.CLICK_SOUND.play()
+                    
+                    if game.lost:
+                        self.board.show_bombs() 
+
+                else:
+                    for position in self.neighbours:
+                        tile = self.board[position]
+                        if tile.visible or tile.value == Tile.FLAGGED_TILE:
+                            tile.value = tile.previous_value
+                        else:
+                            tile.value = Tile.DEFAULT_TILE
+                    
+                        
+
+
+                        
+
+
+
+                self.scroll_wheel_down = False
+   
+
+
 
     def _draw_bomb_number(self):
         """
@@ -153,3 +223,8 @@ class Tile:
         text_rect = text_surface.get_rect(center = self.rect.center)
         self.screen.blit(text_surface, text_rect)
 
+    def _set_neighbours(self, image):
+        for position in self.neighbours:
+            tile = self.board[position]
+            tile.value = image   
+        self.value = image
