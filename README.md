@@ -1,31 +1,44 @@
 # Minesweeper
 
 ## Demonstration
+
 https://github.com/LunaTMT/Minesweeper/assets/44672093/b88e8e33-17c8-4797-8ab1-a556ead8158d
 
-
 ### Menu
+
 https://github.com/LunaTMT/Minesweeper/assets/44672093/227fc63a-d8e5-422f-8473-d90fe67659de
 
 ### Win
+
 https://github.com/LunaTMT/Minesweeper/assets/44672093/5e6dbeda-f440-48a7-84d5-c99c77b9076f
 
 ### Lose
+
 https://github.com/LunaTMT/Minesweeper/assets/44672093/48c42031-459d-414d-9dfa-3e18af3c310b
 
-
 ### Easy
-![image](https://github.com/LunaTMT/Minesweeper/assets/44672093/96931799-754a-4fca-918d-306402884170)
+
+<div align="center">
+
+<img src="https://github.com/LunaTMT/Minesweeper/assets/44672093/96931799-754a-4fca-918d-306402884170" alt="image">
+
+</div>
 
 ### Medium
-![image](https://github.com/LunaTMT/Minesweeper/assets/44672093/8ac7529d-dcaf-4113-866c-36e64362d012)
+
+<div align="center">
+
+<img src="https://github.com/LunaTMT/Minesweeper/assets/44672093/8ac7529d-dcaf-4113-866c-36e64362d012" alt="image">
+
+</div>
 
 ### Hard
-![image](https://github.com/LunaTMT/Minesweeper/assets/44672093/23a32afa-f2cc-454e-9dc2-840bc64a8d69)
 
+<div align="center">
 
+<img src="https://github.com/LunaTMT/Minesweeper/assets/44672093/23a32afa-f2cc-454e-9dc2-840bc64a8d69" alt="image">
 
-
+</div>
 
 ## Installation & Setup
 
@@ -94,6 +107,3 @@ The next two days was followed up by refactoring, comments and making the game m
 * 2048
 * Doodle Jump
 * Tetris
-
-
-
