@@ -1,8 +1,8 @@
 # Minesweeper
 
 ## Demonstration
+https://github.com/LunaTMT/Minesweeper/assets/44672093/b88e8e33-17c8-4797-8ab1-a556ead8158d
 
-https://github.com/LunaTMT/Minesweeper/assets/44672093/bb04ef9b-67f2-4280-b39a-b8e6fb357d70
 
 ### Menu
 https://github.com/LunaTMT/Minesweeper/assets/44672093/227fc63a-d8e5-422f-8473-d90fe67659de
@@ -10,10 +10,9 @@ https://github.com/LunaTMT/Minesweeper/assets/44672093/227fc63a-d8e5-422f-8473-d
 ### Win
 https://github.com/LunaTMT/Minesweeper/assets/44672093/5e6dbeda-f440-48a7-84d5-c99c77b9076f
 
-
-
 ### Lose
-https://github.com/LunaTMT/Minesweeper/assets/44672093/272869ea-8497-4ca4-ad93-b708e20a3656
+https://github.com/LunaTMT/Minesweeper/assets/44672093/48c42031-459d-414d-9dfa-3e18af3c310b
+
 
 ### Easy
 ![image](https://github.com/LunaTMT/Minesweeper/assets/44672093/96931799-754a-4fca-918d-306402884170)
