@@ -8,7 +8,9 @@ https://github.com/LunaTMT/Minesweeper/assets/44672093/bb04ef9b-67f2-4280-b39a-b
 https://github.com/LunaTMT/Minesweeper/assets/44672093/227fc63a-d8e5-422f-8473-d90fe67659de
 
 ### Win
-https://github.com/LunaTMT/Minesweeper/assets/44672093/5905083b-80c2-4709-a2da-794383c69cf8
+https://github.com/LunaTMT/Minesweeper/assets/44672093/5e6dbeda-f440-48a7-84d5-c99c77b9076f
+
+
 
 ### Lose
 https://github.com/LunaTMT/Minesweeper/assets/44672093/272869ea-8497-4ca4-ad93-b708e20a3656
