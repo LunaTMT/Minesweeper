@@ -120,10 +120,10 @@ class Board():
         x depends upon the difficulty 
 
         """
-        self.bomb_locations = []
-        for _ in range(self.bombs):
+        self.bomb_locations = set()
+        while len(self.bomb_locations) != self.bombs:
             position = (random.randint(0, self.rows - 1), random.randint(0, self.columns - 1))
-            self.bomb_locations += [position]
+            self.bomb_locations.add(position)
             self[position].is_bomb = True
         
     def generate(self):
