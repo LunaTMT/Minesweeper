@@ -14,7 +14,7 @@ https://github.com/LunaTMT/Minesweeper/assets/44672093/651a22be-6b44-45c4-be6a-8
 
 ### Lose
 
-https://github.com/LunaTMT/Minesweeper/assets/44672093/48c42031-459d-414d-9dfa-3e18af3c310b
+https://github.com/LunaTMT/Minesweeper/assets/44672093/c9293753-1711-4a2b-94ae-6c55a685b682
 
 ### Easy
 
