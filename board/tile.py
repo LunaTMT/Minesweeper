@@ -142,7 +142,7 @@ class Tile:
                         Tile.PLACE_FLAG_SOUND.play()
                 
 
-                elif event.button == 2:  # Scroll click
+                elif event.button == 2 and self.bombs_nearby:  # Scroll click
                     self.scroll_wheel_down = True
                     if not self.neighbours:
                         self.neighbours = self.board.get_neighbours(self.position)
@@ -165,7 +165,6 @@ class Tile:
 
                 if self.visible and self.bombs_nearby != 0 and bomb_count == self.bombs_nearby:
 
-                    print("reveal")
                     reveal_count = 0
                     
                     for position in self.neighbours:
@@ -183,7 +182,7 @@ class Tile:
                             tile.visible = True
                            # self.value = Tile.CLICKED_TILE
                     
-                    print(reveal_count)
+                    
                     if reveal_count > 0:
                         Tile.CLICK_SOUND.play()
                     
@@ -199,12 +198,6 @@ class Tile:
                             tile.value = Tile.DEFAULT_TILE
                     
                         
-
-
-                        
-
-
-
                 self.scroll_wheel_down = False
    
 
