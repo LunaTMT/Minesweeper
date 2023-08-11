@@ -142,7 +142,7 @@ class Tile:
                         Tile.PLACE_FLAG_SOUND.play()
                 
 
-                elif event.button == 2 and self.bombs_nearby:  # Scroll click
+                elif event.button == 2: # Scroll click
                     self.scroll_wheel_down = True
                     if not self.neighbours:
                         self.neighbours = self.board.get_neighbours(self.position)
