@@ -105,5 +105,5 @@ The next two days was followed up by refactoring, comments and making the game m
 ### Future Projects
 
 * ~~2048~~
-* Doodle Jump
+* ~~Doodle Jump~~
 * Tetris
